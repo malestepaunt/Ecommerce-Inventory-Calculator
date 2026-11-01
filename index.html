@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="离线商品库存管理工具：商品登记、出入库、盘点、低库存提醒及本地备份。">
+<meta name="color-scheme" content="light">
+<title>本地库存台 · Inventory Desk</title>
+<style>
+:root{--bg:#f4f3ee;--paper:#fff;--ink:#203541;--muted:#66777e;--line:#dfe4e4;--navy:#254e60;--pale:#eaf0f2;--red:#a13b32;--orange:#ad5f10;--green:#2b6c55}*{box-sizing:border-box}body{margin:0;font:14px/1.65 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #86b6c8;outline-offset:3px}button,input,select{border-radius:8px}a{color:var(--navy)}.wrap{max-width:1320px;margin:auto;padding:30px 28px}.brand{display:flex;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:.07em;gap:14px}.brand strong{display:flex;align-items:center;gap:10px}.mark{color:#fff;background:var(--ink);border-radius:8px;padding:5px 10px;font-size:18px}.badge{background:#e6ece7;border:1px solid #d6e1da;color:var(--green);padding:5px 11px;border-radius:20px;letter-spacing:0}header{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:32px 0 24px}h1{font-size:34px;line-height:1.25;letter-spacing:-.04em;margin:0 0 10px}header p{margin:0;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:9px}.btn{padding:9px 14px;background:#fff;border:1px solid #b8c8ce;color:var(--ink);font-size:13px;font-weight:600}.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}.btn.subtle{background:transparent}.btn:hover{filter:brightness(.97)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0}.stat{background:#fff;border:1px solid var(--line);padding:20px;border-radius:13px;min-width:0}.stat span{display:block;font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:30px;margin:9px 0 3px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.stat small{font-size:11px;color:var(--muted)}.stat.warning{background:#fff8eb;border-color:#e8d7b7}.stat.warning strong{color:var(--orange)}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px}.panel-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}h2{font-size:18px;margin:0}h3{font-size:16px}.note{font-size:12px;color:var(--muted)}.tools{display:flex;gap:10px;flex-wrap:wrap}.tools input{width:270px;max-width:100%;padding:9px 12px}.tools select{padding:9px 12px;max-width:100%}input,select{border:1px solid #b8c8ce;background:#fff;color:var(--ink);min-width:0}input:read-only{background:#f1f4f4}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:770px;font-size:13px}th{font-weight:600;text-align:left;background:#f5f7f7;color:var(--muted);font-size:12px;white-space:nowrap}th,td{padding:13px 12px;border-bottom:1px solid #edf0f0;vertical-align:middle}td{overflow-wrap:anywhere}td .small{display:block;font-size:11px;color:var(--muted);margin-top:3px}.num{text-align:right;font-variant-numeric:tabular-nums}.sku{font-size:12px;font-family:ui-monospace,Consolas,monospace;max-width:140px}.product-name{max-width:220px}.tag{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;white-space:nowrap;background:#eaf3ed;color:var(--green)}.tag.low{background:#fff0d7;color:#915415}.tag.zero{background:#fbe9e5;color:var(--red)}.row-actions{white-space:nowrap}.text-btn{border:0;background:none;color:var(--navy);padding:5px 6px;font-size:12px;font-weight:600}.pager{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;font-size:12px;color:var(--muted)}.pager .actions{align-items:center}.empty{text-align:center;padding:48px 20px;background:#f8f9f8;border:1px dashed #ced9dc;border-radius:10px;color:var(--muted)}.empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:8px}.empty p{margin:5px 0 18px}.empty[hidden],*[hidden]{display:none!important}.backup{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px}.backup p{margin:4px 0 0;color:var(--muted);font-size:12px}.banner{padding:13px 17px;border-radius:9px;border:1px solid #e3c795;background:#fff7e6;color:#845719;margin-top:18px;font-size:13px}.status{padding:10px 0;min-height:39px;color:var(--green);font-size:13px}.status.error{color:var(--red)}footer{display:flex;justify-content:space-between;gap:15px;padding:22px 0 8px;color:var(--muted);font-size:12px}.guide{margin-top:16px;color:var(--muted);font-size:12px}summary{cursor:pointer;color:var(--ink);font-weight:600}.guide p{margin:8px 0}.hint{font-size:12px;color:var(--muted);margin:6px 0 0}
+dialog{border:1px solid var(--line);border-radius:16px;padding:0;width:min(560px,calc(100% - 28px));max-height:90vh;color:var(--ink);box-shadow:0 24px 90px #15313b30}dialog::backdrop{background:#172b3566}.modal-head{padding:22px 24px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}.modal-head h2{font-size:20px}.close{background:#f0f3f3;border:0;font-size:20px;width:32px;height:32px;line-height:1}.modal-body{padding:0 24px 24px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}.field input,.field select{width:100%;padding:9px 11px}.wide{grid-column:1/-1}.modal-actions{display:flex;justify-content:end;gap:10px;border-top:1px solid var(--line);padding-top:18px;margin-top:22px}.form-error{color:var(--red);background:#fff0ed;padding:9px 12px;border-radius:7px;font-size:13px;margin:14px 0 0}.stock-preview{background:var(--pale);border-radius:9px;padding:14px;margin-top:16px;font-variant-numeric:tabular-nums}.stock-preview strong{font-size:22px}.restore-summary{background:var(--pale);padding:15px;border-radius:9px;margin:15px 0}.restore-summary p{margin:4px 0}
+@media(max-width:850px){.wrap{padding:24px 18px}header{align-items:start;flex-direction:column}.stats{grid-template-columns:1fr 1fr}.panel-top{align-items:start;flex-direction:column}.tools{width:100%}.tools input{flex:1;min-width:180px}.backup{grid-template-columns:1fr}h1{font-size:29px}.panel{padding:18px}}@media(max-width:420px){.brand{font-size:10px;letter-spacing:0}.badge{font-size:10px;padding:4px 7px}.mark{font-size:15px}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:26px}.stat #stat-value{font-size:22px;letter-spacing:-.03em}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}.modal-body{padding:0 18px 20px}.modal-head{padding:18px}.pager{align-items:start;flex-direction:column}footer{display:block}.tools input{width:100%}.tools select{flex:1}}@media print{.actions,.row-actions,.tools,.pager,.backup,.guide,.status,.banner{display:none}body{background:#fff}.wrap{padding:0}.panel{padding:10px}.stats{gap:10px}.table-scroll{overflow:visible}table{min-width:0}footer{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><strong><span class="mark" aria-hidden="true">▥</span> INVENTORY DESK <span class="note">/ 本地库存台</span></strong><span class="badge">● 离线使用 · 数据留在本机</span></div>
+  <header><div><h1>库存有数，补货有底。</h1><p>为小卖家准备的轻量库存台。登记商品，记录每次出入库，及时发现缺货。</p></div><div class="actions"><button class="btn" id="open-movement">记录出入库</button><button class="btn primary" id="open-product">＋ 新建商品</button></div></header>
+  <div class="banner" id="storage-warning" role="alert" hidden></div>
+  <div class="stats" aria-label="库存概览">
+    <div class="stat"><span>商品总数</span><strong id="stat-products">0</strong><small>按不同 SKU 统计</small></div>
+    <div class="stat"><span>库存总件数</span><strong id="stat-stock">0</strong><small>所有商品当前库存合计</small></div>
+    <div class="stat"><span>库存成本估值 · CNY</span><strong id="stat-value">0.00</strong><small>当前库存 × 当前参考单价</small></div>
+    <div class="stat warning"><span>需关注的商品</span><strong id="stat-low">0</strong><small>库存 ≤ 各自预警线，含缺货</small></div>
+  </div>
+  <div class="status" id="status" role="status">还没有商品。从一件熟悉的商品开始，或载入虚构演示数据。</div>
+  <section class="panel" aria-labelledby="inventory-title">
+    <div class="panel-top"><h2 id="inventory-title">商品库存</h2><div class="tools"><input id="search" type="search" aria-label="搜索商品" placeholder="搜索 SKU、商品名称或库位" maxlength="120"><select id="filter" aria-label="筛选库存"><option value="all">全部商品</option><option value="low">低库存（含缺货）</option><option value="zero">仅缺货</option></select></div></div>
+    <div class="empty" id="empty-products"><strong>让第一件商品入库吧</strong><p>一个 SKU 对应一种商品或规格。预警线可以为每件商品单独设置。</p><button class="btn" id="load-demo">载入演示数据</button></div>
+    <div class="empty" id="empty-search" hidden>没有匹配的商品，试试其他关键词或筛选条件。</div>
+    <div class="table-scroll" id="product-table"><table><thead><tr><th>SKU / 库位</th><th>商品名称</th><th class="num">库存 / 预警线</th><th class="num">参考单价 · CNY</th><th>状态</th><th>操作</th></tr></thead><tbody id="products-body"></tbody></table></div>
+    <div class="pager" id="product-pager"><span id="product-page-text"></span><div class="actions"><button class="btn" id="product-prev">上一页</button><button class="btn" id="product-next">下一页</button></div></div>
+  </section>
+  <section class="panel" aria-labelledby="history-title">
+    <div class="panel-top"><h2 id="history-title">操作流水</h2><div class="tools"><select id="history-filter" aria-label="筛选流水商品"><option value="all">所有商品</option></select><button class="btn subtle" id="export-history">导出流水 CSV</button></div></div>
+    <p class="note">最近操作在前；保留初始库存、入库、出库及盘点差异。商品名称与 SKU 显示当前版本。</p>
+    <div class="empty" id="empty-history">还没有流水。新建商品后会记录一条初始库存。</div>
+    <div class="table-scroll" id="history-table"><table><thead><tr><th>时间（本机时区）</th><th>商品 / SKU</th><th>类型</th><th class="num">变动</th><th class="num">结余</th><th>备注</th></tr></thead><tbody id="history-body"></tbody></table></div>
+    <div class="pager" id="history-pager"><span id="history-page-text"></span><div class="actions"><button class="btn" id="history-prev">上一页</button><button class="btn" id="history-next">下一页</button></div></div>
+  </section>
+  <section class="panel backup" aria-labelledby="backup-title"><div><h2 id="backup-title">给库存留一份备份</h2><p>操作会尝试自动保存到当前浏览器。JSON 备份可完整恢复；CSV 适合查看，不能导回。</p><p>浏览器存储不是云端备份。换设备、移动文件或清理浏览器前，请先导出 JSON。</p></div><div class="actions"><button class="btn" id="export-stock">导出库存 CSV</button><button class="btn primary" id="export-backup">导出 JSON 备份</button><button class="btn" id="import-backup">恢复 JSON 备份</button><input type="file" id="backup-file" accept=".json,application/json" hidden></div></section>
+  <details class="guide"><summary>使用口径与数据说明</summary><p>库存以整数“件”为单位，支持单一库存池，可填写库位备注；不支持多仓独立核算。低库存指库存小于或等于预警线，库存为 0 显示“缺货”。提醒仅在打开页面时显示，不会发送手机或后台通知。</p><p>参考单价统一为人民币，每次编辑后只用于当前库存估值，不是先进先出、移动加权或历史采购成本核算。盘点填写实际剩余数量，系统记录差额；出库不能超过当前库存。</p><p>本工具不联网，不同步多设备。避免在多个窗口同时修改同一份数据。数据含业务信息，JSON 和 CSV 请私下保管，不要上传到公开仓库。</p><p>为保留流水，不提供删除商品和删除流水功能。误操作可通过反向出入库或盘点纠正，并在备注说明。恢复备份会在确认后替换当前全部数据，请先导出当前备份。</p></details>
+  <footer><span>INVENTORY DESK · v1.0.0 · MIT License</span><span>无外部依赖 / 无账号 / 无追踪</span></footer>
+</div>
+<dialog id="product-dialog" aria-labelledby="product-dialog-title">
+  <div class="modal-head"><h2 id="product-dialog-title">新建商品</h2><button class="close" type="button" data-close="product-dialog" aria-label="关闭商品窗口">×</button></div>
+  <form class="modal-body" id="product-form"><input id="product-id" type="hidden"><div class="form-grid">
+    <div class="field"><label for="sku">SKU / 商品编码</label><input id="sku" required maxlength="50" placeholder="例如 BAG-001"></div>
+    <div class="field"><label for="location">库位（可选）</label><input id="location" maxlength="60" placeholder="例如 A 架 02 层"></div>
+    <div class="field wide"><label for="name">商品名称</label><input id="name" required maxlength="100" placeholder="例如 帆布手提袋 · 米色"></div>
+    <div class="field"><label for="initial">初始库存 · 件</label><input id="initial" type="number" required min="0" max="1000000" step="1" inputmode="numeric" value="0"><p class="hint" id="initial-hint">以后调整库存请记录出入库或盘点。</p></div>
+    <div class="field"><label for="threshold">低库存预警线 · 件</label><input id="threshold" type="number" required min="0" max="1000000" step="1" inputmode="numeric" value="5"></div>
+    <div class="field wide"><label for="unit-cost">参考单价 · CNY / 件</label><input id="unit-cost" type="number" required min="0" max="10000" step="0.01" inputmode="decimal" value="0"><p class="hint">用于库存成本估值，最多两位小数；未知可填 0。</p></div>
+  </div><p class="form-error" id="product-error" role="alert" hidden></p><div class="modal-actions"><button class="btn" type="button" data-close="product-dialog">取消</button><button class="btn primary" type="submit" id="save-product">保存商品</button></div></form>
+</dialog>
+<dialog id="movement-dialog" aria-labelledby="movement-dialog-title">
+  <div class="modal-head"><h2 id="movement-dialog-title">记录出入库 / 盘点</h2><button class="close" type="button" data-close="movement-dialog" aria-label="关闭出入库窗口">×</button></div>
+  <form class="modal-body" id="movement-form"><div class="form-grid"><div class="field wide"><label for="movement-product">选择商品</label><select id="movement-product" required></select></div>
+  <div class="field"><label for="movement-kind">操作类型</label><select id="movement-kind"><option value="in">入库</option><option value="out">出库</option><option value="count">盘点</option></select></div>
+  <div class="field"><label for="quantity" id="quantity-label">本次入库数量 · 件</label><input id="quantity" type="number" required min="1" max="1000000" step="1" inputmode="numeric"></div>
+  <div class="field wide"><label for="movement-note">备注（可选）</label><input id="movement-note" maxlength="160" placeholder="例如：本周补货 / 订单发货 / 盘点纠正"></div></div>
+  <div class="stock-preview" id="stock-preview">选择商品后显示库存变化。</div><p class="form-error" id="movement-error" role="alert" hidden></p><div class="modal-actions"><button class="btn" type="button" data-close="movement-dialog">取消</button><button class="btn primary" type="submit">确认记录</button></div></form>
+</dialog>
+<dialog id="restore-dialog" aria-labelledby="restore-title"><div class="modal-head"><h2 id="restore-title">核对待恢复的备份</h2><button class="close" data-close="restore-dialog" aria-label="关闭恢复窗口">×</button></div><div class="modal-body"><p>此操作将替换当前全部商品与流水，不进行合并。建议先取消并导出当前 JSON 备份。</p><div class="restore-summary" id="restore-summary"></div><div class="modal-actions"><button class="btn" data-close="restore-dialog">取消</button><button class="btn primary" id="confirm-restore">确认替换并恢复</button></div></div></dialog>
+<script>
+'use strict';
+const LIMITS=Object.freeze({products:1000,movements:10000,quantity:1000000,costCents:1000000,backupBytes:10*1024*1024});
+const KINDS=Object.freeze({initial:'初始库存',in:'入库',out:'出库',count:'盘点'});
+const STORAGE_KEY='inventory-desk:v1';
+function emptyState(){return {schemaVersion:1,products:[],movements:[]};}
+function text(value,label,max,optional=false){if(typeof value!=='string')throw new Error(label+'格式错误。');const s=value.trim();if((!optional&&!s)||s.length>max||/[\x00-\x1f\x7f]/.test(s))throw new Error(label+'不能为空、超长或包含控制字符。');return s;}
+function integer(value,label,max=LIMITS.quantity){if(!Number.isSafeInteger(value)||value<0||value>max)throw new Error(label+'必须是 0 至 '+max+' 的整数。');return value;}
+function timestamp(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value)||!Number.isFinite(Date.parse(value))||new Date(value).toISOString()!==value)throw new Error('备份包含无效时间。');return value;}
+function identifier(value){if(typeof value!=='string'||!/[A-Za-z0-9]/.test(value)||!/^[A-Za-z0-9_-]{1,80}$/.test(value))throw new Error('备份包含无效标识。');return value;}
+function stockMap(state){const stocks=new Map(state.products.map(p=>[p.id,0]));for(const m of state.movements)stocks.set(m.productId,m.after);return stocks;}
+// 验证并只保留已知字段；检查每一条流水的前后库存，防止损坏备份悄悄改变库存。
+function validateState(raw){
+  if(!raw||raw.schemaVersion!==1||!Array.isArray(raw.products)||!Array.isArray(raw.movements))throw new Error('不是受支持的库存备份（版本 1）。');
+  if(raw.products.length>LIMITS.products||raw.movements.length>LIMITS.movements)throw new Error('数据超出商品或流水条数上限。');
+  const ids=new Set(),skus=new Set(),movementIds=new Set(),opened=new Set(),stocks=new Map();
+  const products=raw.products.map(p=>{
+    if(!p||typeof p!=='object')throw new Error('商品格式错误。');
+    const id=identifier(p.id),sku=text(p.sku,'SKU',50),key=sku.toUpperCase();
+    if(ids.has(id)||skus.has(key))throw new Error('商品标识或 SKU 重复。');ids.add(id);skus.add(key);stocks.set(id,0);
+    return {id,sku,name:text(p.name,'商品名称',100),location:text(p.location,'库位',60,true),threshold:integer(p.threshold,'预警线'),unitCostCents:integer(p.unitCostCents,'单价（分）',LIMITS.costCents),createdAt:timestamp(p.createdAt)};
+  });
+  const movements=raw.movements.map(m=>{
+    if(!m||typeof m!=='object')throw new Error('流水格式错误。');
+    const id=identifier(m.id),productId=identifier(m.productId);
+    if(movementIds.has(id)||!ids.has(productId))throw new Error('流水重复或关联的商品不存在。');movementIds.add(id);
+    if(!Object.hasOwn(KINDS,m.kind))throw new Error('流水类型错误。');
+    const before=integer(m.before,'变动前库存'),after=integer(m.after,'变动后库存'),delta=after-before;
+    if(before!==stocks.get(productId)||m.delta!==delta)throw new Error('流水库存前后不一致。');
+    if(m.kind==='initial'){if(opened.has(productId)||before!==0)throw new Error('初始库存重复或无效。');opened.add(productId);}
+    else if(!opened.has(productId)||(m.kind==='in'&&delta<=0)||(m.kind==='out'&&delta>=0)||(m.kind==='count'&&delta===0))throw new Error('出入库方向或盘点差额无效。');
+    stocks.set(productId,after);
+    return {id,productId,kind:m.kind,before,after,delta,note:text(m.note,'流水备注',160,true),at:timestamp(m.at)};
+  });
+  if(opened.size!==products.length)throw new Error('部分商品缺少初始库存流水。');
+  return {schemaVersion:1,products,movements};
+}
+function checkSku(state,sku,exceptId=''){if(state.products.some(p=>p.id!==exceptId&&p.sku.toUpperCase()===sku.toUpperCase()))throw new Error('这个 SKU 已存在，请为不同规格设置不同编码。');}
+function addProduct(state,p,opening,movementId){checkSku(state,p.sku);integer(opening,'初始库存');return validateState({schemaVersion:1,products:[...state.products,p],movements:[...state.movements,{id:movementId,productId:p.id,kind:'initial',before:0,after:opening,delta:opening,note:'建档时填写的初始库存',at:p.createdAt}]});}
+function editProduct(state,p){if(!state.products.some(x=>x.id===p.id))throw new Error('商品不存在。');checkSku(state,p.sku,p.id);return validateState({...state,products:state.products.map(x=>x.id===p.id?p:x)});}
+function recordMovement(state,productId,kind,quantity,note,id,at){
+  if(!state.products.some(p=>p.id===productId))throw new Error('请先选择有效商品。');
+  if(!['in','out','count'].includes(kind))throw new Error('请选择有效的操作类型。');integer(quantity,'数量');
+  if(kind!=='count'&&quantity===0)throw new Error('出入库数量必须大于 0。');
+  const before=stockMap(state).get(productId),after=kind==='in'?before+quantity:kind==='out'?before-quantity:quantity;
+  if(after<0)throw new Error('出库数量超过当前库存，本次未记录。');if(after>LIMITS.quantity)throw new Error('变动后库存超过数量上限。');
+  if(after===before)throw new Error('盘点数量与当前库存相同，无需记录差额。');
+  return validateState({...state,movements:[...state.movements,{id,productId,kind,before,after,delta:after-before,note,at}]});
+}
+function totals(state){const stocks=stockMap(state);return {products:state.products.length,quantity:state.products.reduce((s,p)=>s+stocks.get(p.id),0),valueCents:state.products.reduce((s,p)=>s+stocks.get(p.id)*p.unitCostCents,0),low:state.products.filter(p=>stocks.get(p.id)<=p.threshold).length};}
+function csvCell(value){let s=String(value);if(typeof value==='string'&&/^[\s]*[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+function csv(rows){return '\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');}
+const $=id=>document.getElementById(id);
+const number=n=>n.toLocaleString('zh-CN');
+const money=cents=>(cents/100).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const uid=()=>typeof crypto.randomUUID==='function'?crypto.randomUUID():'id-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
+const date=()=>new Date().toISOString();
+let state=emptyState(),lastSavedRaw=null,storageDamaged=false,conflict=false,pendingRestore=null,productPage=1,historyPage=1;
+function message(value,error=false){$('status').textContent=value;$('status').classList.toggle('error',error);}
+function warning(value){$('storage-warning').hidden=!value;$('storage-warning').textContent=value;}
+function commit(next,success,restore=false){
+  next=validateState(next);let persisted=false;
+  if(conflict&&!restore){message('其他窗口已修改库存。本次未记录，请先刷新并核对最新数据。',true);return false;}
+  if(!storageDamaged||restore){
+    try{
+      const existing=localStorage.getItem(STORAGE_KEY);
+      if(!restore&&existing!==lastSavedRaw){conflict=true;warning('检测到其他窗口修改。请刷新页面后再操作，避免覆盖库存。');message('本次未保存。请刷新并核对最新库存。',true);return false;}
+      const serialized=JSON.stringify(next);localStorage.setItem(STORAGE_KEY,serialized);lastSavedRaw=serialized;persisted=true;storageDamaged=false;conflict=false;warning('');
+    }catch{warning('浏览器未能保存数据。当前操作仅在此页面内有效，请立即导出 JSON 备份；关闭或刷新可能丢失。');}
+  }
+  state=next;render();message(success+(persisted?' 已保存到当前浏览器。':' 仅在当前页面保留，请导出 JSON 备份。'),!persisted);return true;
+}
+function element(tag,value,className){const e=document.createElement(tag);if(value!==undefined)e.textContent=value;if(className)e.className=className;return e;}
+function cell(row,value,className){const td=element('td',value,className);row.append(td);return td;}
+function render(){
+  const t=totals(state),stocks=stockMap(state);$('stat-products').textContent=number(t.products);$('stat-stock').textContent=number(t.quantity);$('stat-value').textContent=money(t.valueCents);$('stat-low').textContent=number(t.low);$('open-movement').disabled=!t.products;
+  const query=$('search').value.trim().toLowerCase(),filter=$('filter').value;
+  const visible=state.products.filter(p=>(p.sku+' '+p.name+' '+p.location).toLowerCase().includes(query)&&(filter==='all'||filter==='low'&&stocks.get(p.id)<=p.threshold||filter==='zero'&&stocks.get(p.id)===0));
+  const pages=Math.max(1,Math.ceil(visible.length/20));productPage=Math.min(productPage,pages);
+  $('empty-products').hidden=t.products!==0;$('empty-search').hidden=t.products===0||visible.length!==0;$('product-table').hidden=$('product-pager').hidden=visible.length===0;
+  const fragment=document.createDocumentFragment();
+  visible.slice((productPage-1)*20,productPage*20).forEach(p=>{
+    const row=element('tr'),stock=stocks.get(p.id),sku=cell(row,p.sku,'sku');sku.append(element('span',p.location||'未设置库位','small'));cell(row,p.name,'product-name');const q=cell(row,number(stock),'num');q.append(element('span','预警线 '+number(p.threshold),'small'));cell(row,money(p.unitCostCents),'num');
+    const badge=cell(row);badge.append(element('span',stock===0?'缺货':stock<=p.threshold?'低库存':'充足','tag '+(stock===0?'zero':stock<=p.threshold?'low':'')));
+    const actions=cell(row,undefined,'row-actions');for(const [name,handler] of [['出入库',()=>openMovement(p.id)],['编辑',()=>openProduct(p.id)]]){const b=element('button',name,'text-btn');b.type='button';b.setAttribute('aria-label',name+' '+p.sku);b.addEventListener('click',handler);actions.append(b);}fragment.append(row);
+  });$('products-body').replaceChildren(fragment);$('product-page-text').textContent='共 '+visible.length+' 个匹配商品 · 第 '+productPage+' / '+pages+' 页';$('product-prev').disabled=productPage===1;$('product-next').disabled=productPage===pages;
+  const selected=$('history-filter').value,opts=[element('option','所有商品')];opts[0].value='all';state.products.forEach(p=>{const o=element('option',p.sku+' · '+p.name);o.value=p.id;opts.push(o);});$('history-filter').replaceChildren(...opts);$('history-filter').value=state.products.some(p=>p.id===selected)?selected:'all';renderHistory();
+}
+function renderHistory(){
+  const selected=$('history-filter').value,logs=state.movements.filter(m=>selected==='all'||m.productId===selected).slice().reverse(),products=new Map(state.products.map(p=>[p.id,p]));
+  const pages=Math.max(1,Math.ceil(logs.length/30));historyPage=Math.min(historyPage,pages);$('empty-history').hidden=logs.length>0;$('history-table').hidden=$('history-pager').hidden=logs.length===0;
+  const fragment=document.createDocumentFragment();logs.slice((historyPage-1)*30,historyPage*30).forEach(m=>{const p=products.get(m.productId),row=element('tr');cell(row,new Date(m.at).toLocaleString('zh-CN',{hour12:false}));const product=cell(row,p.name,'product-name');product.append(element('span',p.sku,'small'));cell(row,KINDS[m.kind]);cell(row,(m.delta>0?'+':'')+number(m.delta),'num');cell(row,number(m.after),'num');cell(row,m.note||'—');fragment.append(row);});$('history-body').replaceChildren(fragment);$('history-page-text').textContent='共 '+logs.length+' 条流水 · 第 '+historyPage+' / '+pages+' 页';$('history-prev').disabled=historyPage===1;$('history-next').disabled=historyPage===pages;
+}
+function formError(id,error){$(id).textContent=error||'';$(id).hidden=!error;}
+function openProduct(id=''){
+  $('product-form').reset();formError('product-error','');const p=state.products.find(x=>x.id===id);$('product-id').value=p?p.id:'';$('product-dialog-title').textContent=p?'编辑商品':'新建商品';$('initial').readOnly=!!p;
+  if(p){$('sku').value=p.sku;$('name').value=p.name;$('location').value=p.location;$('threshold').value=p.threshold;$('unit-cost').value=(p.unitCostCents/100).toFixed(2);$('initial').value=stockMap(state).get(p.id);}
+  $('initial-hint').textContent=p?'此处为当前库存，仅展示。请通过出入库或盘点修改。':'以后调整库存请记录出入库或盘点。';$('product-dialog').showModal();
+}
+function openMovement(id=''){
+  if(!state.products.length){message('请先新建商品。',true);return;}$('movement-form').reset();formError('movement-error','');
+  $('movement-product').replaceChildren(...state.products.map(p=>{const o=element('option',p.sku+' · '+p.name);o.value=p.id;return o;}));if(id)$('movement-product').value=id;movementPreview();$('movement-dialog').showModal();
+}
+function movementPreview(){const kind=$('movement-kind').value,before=stockMap(state).get($('movement-product').value)||0,value=$('quantity').value,quantity=Number(value);$('quantity-label').textContent=(kind==='count'?'盘点实际剩余数量':kind==='in'?'本次入库数量':'本次出库数量')+' · 件';$('quantity').min=kind==='count'?'0':'1';const after=value===''?'待填写':kind==='count'?quantity:kind==='in'?before+quantity:before-quantity;$('stock-preview').textContent='当前 '+number(before)+' 件 → 操作后 '+(typeof after==='number'?number(after):after)+(typeof after==='number'?' 件':'');}
+function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type})),a=element('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function filename(prefix,ext){const d=new Date(),local=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');return prefix+'-'+local+'.'+ext;}
+$('open-product').addEventListener('click',()=>openProduct());$('open-movement').addEventListener('click',()=>openMovement());
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).close()));$('restore-dialog').addEventListener('close',()=>pendingRestore=null);
+$('product-form').addEventListener('submit',event=>{
+  event.preventDefault();formError('product-error','');try{
+    const existing=state.products.find(p=>p.id===$('product-id').value),at=date(),unitCost=Number($('unit-cost').value);
+    if(!Number.isFinite(unitCost)||Math.abs(unitCost*100-Math.round(unitCost*100))>1e-6)throw new Error('单价最多填写两位小数。');
+    const p={id:existing?existing.id:uid(),sku:text($('sku').value,'SKU',50),name:text($('name').value,'商品名称',100),location:text($('location').value,'库位',60,true),threshold:Number($('threshold').value),unitCostCents:Math.round(unitCost*100),createdAt:existing?existing.createdAt:at};
+    const next=existing?editProduct(state,p):addProduct(state,p,Number($('initial').value),uid());if(commit(next,existing?'商品信息已更新。':'商品已建档，并记录初始库存。'))$('product-dialog').close();
+  }catch(error){formError('product-error',error.message);}
+});
+$('movement-form').addEventListener('submit',event=>{event.preventDefault();formError('movement-error','');try{const next=recordMovement(state,$('movement-product').value,$('movement-kind').value,Number($('quantity').value),text($('movement-note').value,'备注',160,true),uid(),date());if(commit(next,'库存变动已记录。'))$('movement-dialog').close();}catch(error){formError('movement-error',error.message);}});
+['movement-product','movement-kind','quantity'].forEach(id=>$(id).addEventListener('input',movementPreview));
+$('search').addEventListener('input',()=>{productPage=1;render();});$('filter').addEventListener('change',()=>{productPage=1;render();});$('history-filter').addEventListener('change',()=>{historyPage=1;renderHistory();});
+for(const [id,delta] of [['product-prev',-1],['product-next',1]])$(id).addEventListener('click',()=>{productPage+=delta;render();});for(const [id,delta] of [['history-prev',-1],['history-next',1]])$(id).addEventListener('click',()=>{historyPage+=delta;renderHistory();});
+$('load-demo').addEventListener('click',()=>{
+  if(state.products.length){message('演示数据仅能在空库存中载入，未改动现有数据。',true);return;}
+  let demo=emptyState();const at=date();for(const [sku,name,location,opening,threshold,unitCostCents] of [['BAG-001','帆布手提袋 · 米色','A 架 01 层',20,5,6800],['CABLE-002','编织数据线 · 1 米','B 架 02 层',3,5,1800],['POUCH-003','收纳袋 · 小号','A 架 03 层',0,3,450]])demo=addProduct(demo,{id:uid(),sku,name,location,threshold,unitCostCents,createdAt:at},opening,uid());commit(demo,'已载入虚构演示商品。请勿当作真实库存。');
+});
+$('export-backup').addEventListener('click',()=>{download(JSON.stringify({format:'inventory-desk-backup',exportedAt:date(),data:state},null,2),'application/json;charset=utf-8',filename('inventory-backup','json'));message('已生成完整 JSON 备份，请查看下载位置并妥善保存。');});
+$('export-stock').addEventListener('click',()=>{const stocks=stockMap(state),rows=[['SKU','商品名称','库位','当前库存（件）','预警线（件）','参考单价（CNY）','库存估值（CNY）','状态'],...state.products.map(p=>{const n=stocks.get(p.id);return [p.sku,p.name,p.location,n,p.threshold,(p.unitCostCents/100).toFixed(2),(n*p.unitCostCents/100).toFixed(2),n===0?'缺货':n<=p.threshold?'低库存':'充足'];})];download(csv(rows),'text/csv;charset=utf-8',filename('inventory-stock','csv'));message('已导出全部商品的库存 CSV（不受当前筛选影响）。');});
+$('export-history').addEventListener('click',()=>{const products=new Map(state.products.map(p=>[p.id,p])),rows=[['时间（ISO UTC）','SKU','商品名称','类型','变动数量（件）','变动前库存','变动后库存','备注'],...state.movements.map(m=>{const p=products.get(m.productId);return [m.at,p.sku,p.name,KINDS[m.kind],m.delta,m.before,m.after,m.note];})];download(csv(rows),'text/csv;charset=utf-8',filename('inventory-history','csv'));message('已导出全部流水 CSV，按记录顺序排列，不受筛选影响。');});
+$('import-backup').addEventListener('click',()=>$('backup-file').click());
+$('backup-file').addEventListener('change',async()=>{
+  const file=$('backup-file').files[0];$('backup-file').value='';if(!file)return;pendingRestore=null;
+  try{if(file.size>LIMITS.backupBytes)throw new Error('备份文件不得超过 10 MiB。');const raw=JSON.parse(await file.text());if(!raw||raw.format!=='inventory-desk-backup')throw new Error('请选择本工具导出的 JSON 备份，CSV 不能恢复。');timestamp(raw.exportedAt);const candidate=validateState(raw.data),t=totals(candidate);
+    pendingRestore=candidate;$('restore-summary').replaceChildren(element('p','待恢复：'+t.products+' 个商品 / '+number(t.quantity)+' 件库存 / '+candidate.movements.length+' 条流水'),element('p','备份导出时间：'+new Date(raw.exportedAt).toLocaleString('zh-CN')),element('p','当前数据：'+state.products.length+' 个商品 / '+state.movements.length+' 条流水'));$('restore-dialog').showModal();
+  }catch(error){message('未导入任何数据：'+error.message,true);}
+});
+$('confirm-restore').addEventListener('click',()=>{if(!pendingRestore)return;try{if(commit(pendingRestore,'已恢复备份并替换当前数据。',true)){productPage=historyPage=1;$('search').value='';$('filter').value='all';$('history-filter').value='all';render();$('restore-dialog').close();}}catch(error){message('恢复失败：'+error.message,true);}});
+window.addEventListener('storage',event=>{if(event.key===STORAGE_KEY||event.key===null){conflict=true;warning('其他窗口或浏览器操作改变了本机数据。请刷新页面后再修改库存；当前窗口暂不接受新记录。');}});
+try{lastSavedRaw=localStorage.getItem(STORAGE_KEY);if(lastSavedRaw!==null){state=validateState(JSON.parse(lastSavedRaw));message('已载入当前浏览器保存的库存。重要改动后请另存 JSON 备份。');}}catch{storageDamaged=true;warning('本机数据无法读取，当前为临时空库存。原数据不会自动覆盖。可恢复有效 JSON 备份；新操作请先导出备份。');message('当前为临时模式，请核对数据后操作。',true);}
+render();
+</script>
+</body>
+</html>
